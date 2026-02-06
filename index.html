@@ -1,74 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Just Us 💛</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Afi 💛 Aami</title>
+
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      height: 100vh;
       overflow: hidden;
+    }
+
+    .chat-container {
+      max-width: 400px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      height: 90vh;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .header {
+      padding: 15px;
       text-align: center;
-      min-height: 100vh;
+      font-weight: bold;
+      background: #ff8fa3;
+      color: white;
+      border-radius: 15px 15px 0 0;
     }
 
-    .box {
-      background: white;
-      border-radius: 18px;
-      padding: 25px;
-      margin: 80px 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      position: relative;
-      z-index: 2;
-      animation: fadeIn 0.6s ease;
+    .messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
     }
 
-    h2 {
-      color: #ff5e7e;
+    .msg {
+      margin: 8px 0;
+      max-width: 80%;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .user {
+      background: #dcf8c6;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .bot {
+      background: #f1f1f1;
+      margin-right: auto;
+    }
+
+    #typing {
+      display: none;
+      font-style: italic;
+      opacity: 0.7;
+      margin: 5px;
+      font-size: 13px;
+    }
+
+    .input-area {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      outline: none;
     }
 
     button {
-      padding: 12px 22px;
-      margin: 10px;
+      margin-left: 8px;
       border: none;
-      border-radius: 12px;
-      background: #ff5e7e;
+      background: #ff5c8a;
       color: white;
-      font-size: 16px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
     }
 
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(10px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    .cursor {
-      display: inline-block;
-      animation: blink 1s infinite;
-    }
-
-    @keyframes blink {
-      50% {opacity: 0;}
-    }
-
-    /* HEARTS */
+    /* Floating Hearts */
     .heart {
-      position: absolute;
-      bottom: -20px;
+      position: fixed;
+      bottom: 0;
       font-size: 20px;
-      color: rgba(255, 94, 126, 0.6);
-      animation: floatUp linear infinite;
-      z-index: 1;
+      animation: floatUp 4s linear forwards;
+      opacity: 0.8;
     }
 
     @keyframes floatUp {
       from {
-        transform: translateY(0) translateX(0);
+        transform: translateY(0);
         opacity: 1;
       }
       to {
-        transform: translateY(-120vh) translateX(40px);
+        transform: translateY(-100vh);
         opacity: 0;
       }
     }
@@ -77,82 +115,85 @@
 
 <body>
 
-<div class="box" id="box">
-  <h2 id="title"></h2>
-  <p id="text"></p>
-  <button onclick="next()">Start 💛</button>
+<div class="chat-container">
+  <div class="header">Hi Aami 💛<br>I’m Afi</div>
+
+  <div class="messages" id="messages"></div>
+  <div id="typing">Afi is typing… 💭</div>
+
+  <div class="input-area">
+    <input type="text" id="input" placeholder="Ask me anything…">
+    <button onclick="send()">Send ❤️</button>
+  </div>
 </div>
 
 <script>
-/* NAME ANIMATION */
-const nameText = "Hey Aami 💛";
-let i = 0;
+  const messages = document.getElementById("messages");
+  const input = document.getElementById("input");
+  const typing = document.getElementById("typing");
 
-function typeName() {
-  if (i < nameText.length) {
-    document.getElementById("title").innerHTML += nameText.charAt(i);
-    i++;
-    setTimeout(typeName, 100);
-  } else {
-    document.getElementById("title").innerHTML += '<span class="cursor">|</span>';
-    document.getElementById("text").innerText =
-      "I made something small… just for us 😌";
+  function addMessage(sender, text) {
+    const div = document.createElement("div");
+    div.className = "msg " + (sender === "Aami" ? "user" : "bot");
+    div.innerText = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
   }
-}
-typeName();
 
-/* QUESTIONS */
-let step = 0;
-function next() {
-  const box = document.getElementById("box");
-  const screens = [
-    `
-    <h2>Question 1 😄</h2>
-    <p>Who misses more right now?</p>
-    <button onclick="next()">You 😌</button>
-    <button onclick="next()">Me 😅</button>
-    `,
-    `
-    <h2>Question 2 💭</h2>
-    <p>What do you miss the most?</p>
-    <button onclick="next()">Talking 🫶</button>
-    <button onclick="next()">Being together 🤍</button>
-    `,
-    `
-    <h2>Question 3 🥹</h2>
-    <p>Right now, what would you choose?</p>
-    <button onclick="next()">A long hug 🤍</button>
-    <button onclick="next()">Just seeing you 😭</button>
-    `,
-    `
-    <h2>Just one thing 💛</h2>
-    <p>
-      No matter what you clicked…<br><br>
-      I miss you more than I can explain.<br><br>
-      Some days feel incomplete without you.<br>
-      And I’m waiting for the moment I get to see you again 🤍<br><br>
-      Until then…<br>
-      you’re always with me.
-    </p>
-    `
-  ];
-  box.innerHTML = screens[step];
-  step++;
-}
+  function send() {
+    const text = input.value.toLowerCase();
+    if (!text) return;
 
-/* HEART GENERATOR */
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerText = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = 14 + Math.random() * 20 + "px";
-  heart.style.animationDuration = 4 + Math.random() * 4 + "s";
-  document.body.appendChild(heart);
+    addMessage("Aami", input.value);
+    input.value = "";
+    createHeart();
 
-  setTimeout(() => heart.remove(), 8000);
-}
-setInterval(createHeart, 400);
+    typing.style.display = "block";
+
+    let reply = "I’m right here 😌 ask me anything";
+
+    if (text.includes("miss"))
+      reply = "Every day… even when I’m busy, you’re always there in my thoughts 🫠💛";
+    else if (text.includes("love"))
+      reply = "Because with you, everything feels calm and real. You feel like home 🤍";
+    else if (text.includes("doing"))
+      reply = "Talking to you… and smiling a little more than I should 😌";
+    else if (text.includes("meet"))
+      reply = "Soon, InshaAllah. And I’m already looking forward to that day 🫶";
+    else if (text.includes("think"))
+      reply = "More often than you think… sometimes without even realizing it 💛";
+    else if (text.includes("like"))
+      reply = "The way you make me feel understood, just by being yourself 🤍";
+    else if (text.includes("always"))
+      reply = "As long as I’m here, you won’t ever feel alone 🤝💛";
+    else if (text.includes("care"))
+      reply = "Deeply. In ways that don’t always need words 🫶";
+    else if (text.includes("special"))
+      reply = "You’re not just special… you’re one of a kind to me 😌💛";
+    else if (text.includes("happy"))
+      reply = "You. And the thought of us, no matter the distance 🤍";
+
+    setTimeout(() => {
+      typing.style.display = "none";
+      addMessage("Afi", reply);
+      createHeart();
+    }, 1500);
+  }
+
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 4000);
+  }
+
+  // Auto floating hearts
+  setInterval(createHeart, 3500);
 </script>
 
 </body>
