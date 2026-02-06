@@ -5,10 +5,11 @@
   <title>Just Us 💛</title>
   <style>
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      overflow: hidden;
       text-align: center;
-      padding: 20px;
       min-height: 100vh;
     }
 
@@ -16,8 +17,10 @@
       background: white;
       border-radius: 18px;
       padding: 25px;
-      margin-top: 60px;
+      margin: 80px 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 2;
       animation: fadeIn 0.6s ease;
     }
 
@@ -35,10 +38,6 @@
       font-size: 16px;
     }
 
-    button:hover {
-      opacity: 0.9;
-    }
-
     @keyframes fadeIn {
       from {opacity: 0; transform: translateY(10px);}
       to {opacity: 1; transform: translateY(0);}
@@ -52,6 +51,27 @@
     @keyframes blink {
       50% {opacity: 0;}
     }
+
+    /* HEARTS */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      color: rgba(255, 94, 126, 0.6);
+      animation: floatUp linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-120vh) translateX(40px);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 
@@ -60,10 +80,11 @@
 <div class="box" id="box">
   <h2 id="title"></h2>
   <p id="text"></p>
-  <button id="startBtn" onclick="next()">Start 💛</button>
+  <button onclick="next()">Start 💛</button>
 </div>
 
 <script>
+/* NAME ANIMATION */
 const nameText = "Hey Aami 💛";
 let i = 0;
 
@@ -74,16 +95,16 @@ function typeName() {
     setTimeout(typeName, 100);
   } else {
     document.getElementById("title").innerHTML += '<span class="cursor">|</span>';
-    document.getElementById("text").innerText = "I made something small… just for us 😌";
+    document.getElementById("text").innerText =
+      "I made something small… just for us 😌";
   }
 }
 typeName();
 
+/* QUESTIONS */
 let step = 0;
-
 function next() {
   const box = document.getElementById("box");
-
   const screens = [
     `
     <h2>Question 1 😄</h2>
@@ -104,27 +125,34 @@ function next() {
     <button onclick="next()">Just seeing you 😭</button>
     `,
     `
-    <h2>Question 4 ✨</h2>
-    <p>Us… what are we?</p>
-    <button onclick="next()">Something special 💛</button>
-    <button onclick="next()">Forever 😌</button>
-    `,
-    `
     <h2>Just one thing 💛</h2>
     <p>
       No matter what you clicked…<br><br>
       I miss you more than I can explain.<br><br>
       Some days feel incomplete without you.<br>
-      And I’m just waiting for the day I get to see you again 🤍<br><br>
+      And I’m waiting for the moment I get to see you again 🤍<br><br>
       Until then…<br>
       you’re always with me.
     </p>
     `
   ];
-
   box.innerHTML = screens[step];
   step++;
 }
+
+/* HEART GENERATOR */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerText = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = 14 + Math.random() * 20 + "px";
+  heart.style.animationDuration = 4 + Math.random() * 4 + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 8000);
+}
+setInterval(createHeart, 400);
 </script>
 
 </body>
