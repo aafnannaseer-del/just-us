@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Just Us 💛</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      text-align: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .box {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-top: 60px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      animation: fadeIn 0.6s ease;
+    }
+
+    h2 {
+      color: #ff5e7e;
+    }
+
+    button {
+      padding: 12px 22px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      background: #ff5e7e;
+      color: white;
+      font-size: 16px;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .cursor {
+      display: inline-block;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% {opacity: 0;}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box" id="box">
+  <h2 id="title"></h2>
+  <p id="text"></p>
+  <button id="startBtn" onclick="next()">Start 💛</button>
+</div>
+
+<script>
+const nameText = "Hey Aami 💛";
+let i = 0;
+
+function typeName() {
+  if (i < nameText.length) {
+    document.getElementById("title").innerHTML += nameText.charAt(i);
+    i++;
+    setTimeout(typeName, 100);
+  } else {
+    document.getElementById("title").innerHTML += '<span class="cursor">|</span>';
+    document.getElementById("text").innerText = "I made something small… just for us 😌";
+  }
+}
+typeName();
+
+let step = 0;
+
+function next() {
+  const box = document.getElementById("box");
+
+  const screens = [
+    `
+    <h2>Question 1 😄</h2>
+    <p>Who misses more right now?</p>
+    <button onclick="next()">You 😌</button>
+    <button onclick="next()">Me 😅</button>
+    `,
+    `
+    <h2>Question 2 💭</h2>
+    <p>What do you miss the most?</p>
+    <button onclick="next()">Talking 🫶</button>
+    <button onclick="next()">Being together 🤍</button>
+    `,
+    `
+    <h2>Question 3 🥹</h2>
+    <p>Right now, what would you choose?</p>
+    <button onclick="next()">A long hug 🤍</button>
+    <button onclick="next()">Just seeing you 😭</button>
+    `,
+    `
+    <h2>Question 4 ✨</h2>
+    <p>Us… what are we?</p>
+    <button onclick="next()">Something special 💛</button>
+    <button onclick="next()">Forever 😌</button>
+    `,
+    `
+    <h2>Just one thing 💛</h2>
+    <p>
+      No matter what you clicked…<br><br>
+      I miss you more than I can explain.<br><br>
+      Some days feel incomplete without you.<br>
+      And I’m just waiting for the day I get to see you again 🤍<br><br>
+      Until then…<br>
+      you’re always with me.
+    </p>
+    `
+  ];
+
+  box.innerHTML = screens[step];
+  step++;
+}
+</script>
+
+</body>
+</html>
