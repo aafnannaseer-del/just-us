@@ -1,200 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Afi 💛 Aami</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Afi 😏 Aswathy</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-      height: 100vh;
-      overflow: hidden;
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #1f1c2c, #928DAB);
+      height:100vh;
+      overflow:hidden;
+      color:#fff;
     }
 
-    .chat-container {
-      max-width: 400px;
-      margin: 20px auto;
-      background: #fff;
-      border-radius: 15px;
-      display: flex;
-      flex-direction: column;
-      height: 90vh;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    .app{
+      max-width:420px;
+      margin:16px auto;
+      background: rgba(0,0,0,.45);
+      border-radius:18px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.4);
+      height:92vh;
+      display:flex;
+      flex-direction:column;
+      backdrop-filter: blur(6px);
     }
 
-    .header {
-      padding: 15px;
-      text-align: center;
-      font-weight: bold;
-      background: #ff8fa3;
-      color: white;
-      border-radius: 15px 15px 0 0;
+    .header{
+      padding:14px;
+      text-align:center;
+      font-weight:700;
+      letter-spacing:.3px;
+      background: linear-gradient(135deg, #ff512f, #dd2476);
+      border-radius:18px 18px 0 0;
     }
 
-    .messages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
+    .header small{
+      display:block;
+      font-weight:500;
+      opacity:.9;
     }
 
-    .msg {
-      margin: 8px 0;
-      max-width: 80%;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 14px;
+    .chat{
+      flex:1;
+      padding:12px;
+      overflow-y:auto;
     }
 
-    .user {
-      background: #dcf8c6;
-      margin-left: auto;
-      text-align: right;
+    .msg{
+      max-width:85%;
+      margin:8px 0;
+      padding:10px 12px;
+      border-radius:14px;
+      line-height:1.25;
+      font-size:14px;
     }
 
-    .bot {
-      background: #f1f1f1;
-      margin-right: auto;
+    .afi{
+      background: rgba(255,255,255,.15);
+      margin-right:auto;
+      border-top-left-radius:6px;
     }
 
-    #typing {
-      display: none;
-      font-style: italic;
-      opacity: 0.7;
-      margin: 5px;
-      font-size: 13px;
+    .ash{
+      background: linear-gradient(135deg, #ffb347, #ffcc33);
+      color:#111;
+      margin-left:auto;
+      border-top-right-radius:6px;
     }
 
-    .input-area {
-      display: flex;
-      padding: 10px;
-      border-top: 1px solid #ddd;
+    .typing{
+      display:none;
+      padding:0 12px 8px;
+      font-style:italic;
+      opacity:.8;
+      font-size:13px;
     }
 
-    input {
-      flex: 1;
-      padding: 8px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      outline: none;
+    .controls{
+      padding:12px;
+      border-top:1px solid rgba(255,255,255,.15);
+      display:flex;
+      gap:10px;
     }
 
-    button {
-      margin-left: 8px;
-      border: none;
-      background: #ff5c8a;
-      color: white;
-      padding: 8px 14px;
-      border-radius: 20px;
-      cursor: pointer;
+    .btn{
+      flex:1;
+      padding:10px 0;
+      border:none;
+      border-radius:999px;
+      font-weight:700;
+      cursor:pointer;
     }
 
-    /* Floating Hearts */
-    .heart {
-      position: fixed;
-      bottom: 0;
-      font-size: 20px;
-      animation: floatUp 4s linear forwards;
-      opacity: 0.8;
+    .yes{ background:#00e676; color:#111; }
+    .no{ background:#ff5252; color:#111; }
+
+    /* Floating emojis */
+    .float{
+      position:fixed;
+      bottom:-10px;
+      font-size:22px;
+      animation: rise 4s linear forwards;
+      opacity:.9;
+      pointer-events:none;
     }
 
-    @keyframes floatUp {
-      from {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-100vh);
-        opacity: 0;
-      }
+    @keyframes rise{
+      from{ transform:translateY(0) scale(1); opacity:1; }
+      to{ transform:translateY(-110vh) scale(1.3); opacity:0; }
     }
   </style>
 </head>
 
 <body>
+  <div class="app">
+    <div class="header">
+      Hey Aswathy 😏
+      <small>Warning: playful questions ahead</small>
+    </div>
 
-<div class="chat-container">
-  <div class="header">Hi Aami 💛<br>I’m Afi</div>
+    <div class="chat" id="chat"></div>
+    <div class="typing" id="typing">Afi is thinking… 👀</div>
 
-  <div class="messages" id="messages"></div>
-  <div id="typing">Afi is typing… 💭</div>
-
-  <div class="input-area">
-    <input type="text" id="input" placeholder="Ask me anything…">
-    <button onclick="send()">Send ❤️</button>
+    <div class="controls">
+      <button class="btn yes" onclick="answer(true)">YES 😌</button>
+      <button class="btn no" onclick="answer(false)">NO 😏</button>
+    </div>
   </div>
-</div>
 
 <script>
-  const messages = document.getElementById("messages");
-  const input = document.getElementById("input");
-  const typing = document.getElementById("typing");
+  const chat = document.getElementById('chat');
+  const typing = document.getElementById('typing');
 
-  function addMessage(sender, text) {
-    const div = document.createElement("div");
-    div.className = "msg " + (sender === "Aami" ? "user" : "bot");
-    div.innerText = text;
-    messages.appendChild(div);
-    messages.scrollTop = messages.scrollHeight;
+  const questions = [
+    "Do you enjoy talking to me?",
+    "Have you ever smiled while chatting with me?",
+    "Would you miss me if I go silent for a day?",
+    "Do I make your mood better sometimes?",
+    "Do you secretly like my flirting?",
+    "Am I more entertaining than you admit?",
+    "Have you ever typed a reply, deleted it, and typed again?",
+    "Do you enjoy roasting me a little too much?",
+    "Would chatting be boring without me?",
+    "If I flirt more… should I continue?"
+  ];
+
+  const yesReplies = [
+    "Hmm… noted 😌 I’ll pretend I’m surprised.",
+    "Caught you smiling 😏",
+    "As expected. Premium feature vibes 😌",
+    "I knew it. Mood booster confirmed 🔥",
+    "Secret’s out then 👀 don’t blame me later.",
+    "Told you. Memorable, not forgettable 😌",
+    "Haha, overthinking exposed 😂",
+    "Roast accepted. I can handle it 😏",
+    "See? Math checks out 😌",
+    "Alright… you asked for it 😏🔥"
+  ];
+
+  const noReplies = [
+    "Lying detected 🚨 but okay, continue acting strong 😌",
+    "Interesting… we’ll test that theory 😂",
+    "Denial is a powerful thing 😏",
+    "Yet here you are… suspicious 😌",
+    "Ah yes, classic denial 🤭",
+    "And still replying. Explain that 😏",
+    "Overthinking AND denying? Cute 😂",
+    "You enjoy it more than you admit 😌",
+    "Bold claim. Questionable truth 😏",
+    "Noted… continuing carefully 😏🔥"
+  ];
+
+  let i = 0;
+
+  function addMsg(who, text){
+    const d = document.createElement('div');
+    d.className = msg ${who};
+    d.innerText = text;
+    chat.appendChild(d);
+    chat.scrollTop = chat.scrollHeight;
   }
 
-  function send() {
-    const text = input.value.toLowerCase();
-    if (!text) return;
-
-    addMessage("Aami", input.value);
-    input.value = "";
-    createHeart();
-
-    typing.style.display = "block";
-
-    let reply = "I’m right here 😌 ask me anything";
-
-    if (text.includes("miss"))
-      reply = "Every day… even when I’m busy, you’re always there in my thoughts 🫠💛";
-    else if (text.includes("love"))
-      reply = "Because with you, everything feels calm and real. You feel like home 🤍";
-    else if (text.includes("doing"))
-      reply = "Talking to you… and smiling a little more than I should 😌";
-    else if (text.includes("meet"))
-      reply = "Soon, InshaAllah. And I’m already looking forward to that day 🫶";
-    else if (text.includes("think"))
-      reply = "More often than you think… sometimes without even realizing it 💛";
-    else if (text.includes("like"))
-      reply = "The way you make me feel understood, just by being yourself 🤍";
-    else if (text.includes("always"))
-      reply = "As long as I’m here, you won’t ever feel alone 🤝💛";
-    else if (text.includes("care"))
-      reply = "Deeply. In ways that don’t always need words 🫶";
-    else if (text.includes("special"))
-      reply = "You’re not just special… you’re one of a kind to me 😌💛";
-    else if (text.includes("happy"))
-      reply = "You. And the thought of us, no matter the distance 🤍";
-
-    setTimeout(() => {
-      typing.style.display = "none";
-      addMessage("Afi", reply);
-      createHeart();
-    }, 1500);
+  function floatEmoji(){
+    const e = document.createElement('div');
+    e.className = 'float';
+    e.innerText = Math.random() > .5 ? "😏" : "🔥";
+    e.style.left = Math.random()*100 + "vw";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(), 4000);
   }
 
-  function createHeart() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerText = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-      heart.remove();
-    }, 4000);
+  function ask(){
+    if(i >= questions.length){
+      addMsg('afi', "Okay that’s enough teasing for now 😌 Come back later.");
+      return;
+    }
+    addMsg('afi', questions[i]);
+    floatEmoji();
   }
 
-  // Auto floating hearts
-  setInterval(createHeart, 3500);
+  function answer(isYes){
+    addMsg('ash', isYes ? "YES" : "NO");
+    typing.style.display = 'block';
+    setTimeout(()=>{
+      typing.style.display = 'none';
+      addMsg('afi', isYes ? yesReplies[i] : noReplies[i]);
+      floatEmoji();
+      i++;
+      setTimeout(ask, 800);
+    }, 1200);
+  }
+
+  // Start
+  ask();
+  setInterval(floatEmoji, 3500);
 </script>
-
 </body>
 </html>
