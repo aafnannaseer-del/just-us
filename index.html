@@ -31,7 +31,6 @@
       padding:14px;
       text-align:center;
       font-weight:700;
-      letter-spacing:.3px;
       background: linear-gradient(135deg, #ff512f, #dd2476);
       border-radius:18px 18px 0 0;
     }
@@ -53,8 +52,8 @@
       margin:8px 0;
       padding:10px 12px;
       border-radius:14px;
-      line-height:1.25;
       font-size:14px;
+      line-height:1.3;
     }
 
     .afi{
@@ -68,6 +67,7 @@
       color:#111;
       margin-left:auto;
       border-top-right-radius:6px;
+      font-weight:600;
     }
 
     .typing{
@@ -92,12 +92,12 @@
       border-radius:999px;
       font-weight:700;
       cursor:pointer;
+      font-size:14px;
     }
 
     .yes{ background:#00e676; color:#111; }
     .no{ background:#ff5252; color:#111; }
 
-    /* Floating emojis */
     .float{
       position:fixed;
       bottom:-10px;
@@ -131,8 +131,8 @@
   </div>
 
 <script>
-  const chat = document.getElementById('chat');
-  const typing = document.getElementById('typing');
+  const chat = document.getElementById("chat");
+  const typing = document.getElementById("typing");
 
   const questions = [
     "Do you enjoy talking to me?",
@@ -151,71 +151,76 @@
     "Hmm… noted 😌 I’ll pretend I’m surprised.",
     "Caught you smiling 😏",
     "As expected. Premium feature vibes 😌",
-    "I knew it. Mood booster confirmed 🔥",
-    "Secret’s out then 👀 don’t blame me later.",
+    "Mood booster confirmed 🔥",
+    "Secret’s out then 👀",
     "Told you. Memorable, not forgettable 😌",
-    "Haha, overthinking exposed 😂",
-    "Roast accepted. I can handle it 😏",
+    "Overthinking exposed 😂",
+    "Roast accepted 😏",
     "See? Math checks out 😌",
     "Alright… you asked for it 😏🔥"
   ];
 
   const noReplies = [
-    "Lying detected 🚨 but okay, continue acting strong 😌",
+    "Lying detected 🚨 but okay 😌",
     "Interesting… we’ll test that theory 😂",
-    "Denial is a powerful thing 😏",
+    "Denial is powerful 😏",
     "Yet here you are… suspicious 😌",
-    "Ah yes, classic denial 🤭",
-    "And still replying. Explain that 😏",
-    "Overthinking AND denying? Cute 😂",
+    "Classic denial 🤭",
+    "Still replying though 😏",
+    "Overthinking AND denying? 😂",
     "You enjoy it more than you admit 😌",
-    "Bold claim. Questionable truth 😏",
+    "Bold claim 😏",
     "Noted… continuing carefully 😏🔥"
   ];
 
   let i = 0;
 
   function addMsg(who, text){
-    const d = document.createElement('div');
-    d.className = msg ${who};
+    const d = document.createElement("div");
+    d.className = "msg " + who;
     d.innerText = text;
     chat.appendChild(d);
     chat.scrollTop = chat.scrollHeight;
   }
 
   function floatEmoji(){
-    const e = document.createElement('div');
-    e.className = 'float';
-    e.innerText = Math.random() > .5 ? "😏" : "🔥";
-    e.style.left = Math.random()*100 + "vw";
+    const e = document.createElement("div");
+    e.className = "float";
+    e.innerText = Math.random() > 0.5 ? "😏" : "🔥";
+    e.style.left = Math.random() * 100 + "vw";
     document.body.appendChild(e);
-    setTimeout(()=>e.remove(), 4000);
+    setTimeout(() => e.remove(), 4000);
   }
 
   function ask(){
-    if(i >= questions.length){
-      addMsg('afi', "Okay that’s enough teasing for now 😌 Come back later.");
+    if (i >= questions.length) {
+      addMsg("afi", "Okay okay 😌 game over. You survived.");
       return;
     }
-    addMsg('afi', questions[i]);
+    addMsg("afi", questions[i]);
     floatEmoji();
   }
 
   function answer(isYes){
-    addMsg('ash', isYes ? "YES" : "NO");
-    typing.style.display = 'block';
-    setTimeout(()=>{
-      typing.style.display = 'none';
-      addMsg('afi', isYes ? yesReplies[i] : noReplies[i]);
+    addMsg("ash", isYes ? "YES" : "NO");
+    typing.style.display = "block";
+
+    setTimeout(() => {
+      typing.style.display = "none";
+      addMsg("afi", isYes ? yesReplies[i] : noReplies[i]);
       floatEmoji();
       i++;
-      setTimeout(ask, 800);
+      setTimeout(ask, 700);
     }, 1200);
   }
 
-  // Start
-  ask();
-  setInterval(floatEmoji, 3500);
+  // START SAFELY AFTER LOAD
+  window.onload = () => {
+    addMsg("afi", "Ready? Let’s play 😏");
+    setTimeout(ask, 600);
+    setInterval(floatEmoji, 3500);
+  };
 </script>
+
 </body>
 </html>
