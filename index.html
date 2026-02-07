@@ -1,225 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Afi 😏 Aswathy</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aswathy 🌹</title>
 
-  <style>
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(circle at top, #1f1c2c, #928DAB);
-      height:100vh;
-      overflow:hidden;
-      color:#fff;
-    }
+<style>
+:root{
+  --pink:#ff4d6d;
+  --rose:#ff8fab;
+  --glass:rgba(255,255,255,0.15);
+}
 
-    .app{
-      max-width:420px;
-      margin:16px auto;
-      background: rgba(0,0,0,.45);
-      border-radius:18px;
-      box-shadow: 0 20px 40px rgba(0,0,0,.4);
-      height:92vh;
-      display:flex;
-      flex-direction:column;
-      backdrop-filter: blur(6px);
-    }
+*{box-sizing:border-box}
 
-    .header{
-      padding:14px;
-      text-align:center;
-      font-weight:700;
-      background: linear-gradient(135deg, #ff512f, #dd2476);
-      border-radius:18px 18px 0 0;
-    }
+body{
+  margin:0;
+  height:100vh;
+  background:
+    radial-gradient(circle at top, #2b1055, #000);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto;
+  color:white;
+  overflow:hidden;
+}
 
-    .header small{
-      display:block;
-      font-weight:500;
-      opacity:.9;
-    }
+/* glowing background dots */
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size:40px 40px;
+  animation: move 20s linear infinite;
+}
+@keyframes move{
+  from{transform:translateY(0)}
+  to{transform:translateY(-40px)}
+}
 
-    .chat{
-      flex:1;
-      padding:12px;
-      overflow-y:auto;
-    }
+.card{
+  position:relative;
+  background:var(--glass);
+  backdrop-filter: blur(10px);
+  border-radius:26px;
+  padding:35px 28px;
+  width:90%;
+  max-width:360px;
+  box-shadow:
+    0 0 40px rgba(255,77,109,0.35),
+    inset 0 0 30px rgba(255,255,255,0.1);
+  text-align:center;
+  animation: pop 1s ease;
+}
+@keyframes pop{
+  from{transform:scale(.9); opacity:0}
+  to{transform:scale(1); opacity:1}
+}
 
-    .msg{
-      max-width:85%;
-      margin:8px 0;
-      padding:10px 12px;
-      border-radius:14px;
-      font-size:14px;
-      line-height:1.3;
-    }
+h1{
+  margin:0;
+  font-size:26px;
+  background:linear-gradient(90deg,var(--pink),var(--rose));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    .afi{
-      background: rgba(255,255,255,.15);
-      margin-right:auto;
-      border-top-left-radius:6px;
-    }
+p{
+  margin:14px 0 22px;
+  font-size:16px;
+  opacity:.95;
+}
 
-    .ash{
-      background: linear-gradient(135deg, #ffb347, #ffcc33);
-      color:#111;
-      margin-left:auto;
-      border-top-right-radius:6px;
-      font-weight:600;
-    }
+.buttons{
+  display:flex;
+  gap:15px;
+  justify-content:center;
+}
 
-    .typing{
-      display:none;
-      padding:0 12px 8px;
-      font-style:italic;
-      opacity:.8;
-      font-size:13px;
-    }
+button{
+  flex:1;
+  padding:12px 0;
+  border:none;
+  border-radius:999px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--pink),var(--rose));
+  color:#111;
+  box-shadow:0 0 20px rgba(255,77,109,.6);
+  transition:.25s;
+}
+button:hover{
+  transform:scale(1.05);
+}
 
-    .controls{
-      padding:12px;
-      border-top:1px solid rgba(255,255,255,.15);
-      display:flex;
-      gap:10px;
-    }
+.rose{
+  font-size:80px;
+  animation: rise 2.5s ease forwards;
+}
+@keyframes rise{
+  from{transform:scale(.5) translateY(40px); opacity:0}
+  to{transform:scale(1) translateY(0); opacity:1}
+}
 
-    .btn{
-      flex:1;
-      padding:10px 0;
-      border:none;
-      border-radius:999px;
-      font-weight:700;
-      cursor:pointer;
-      font-size:14px;
-    }
-
-    .yes{ background:#00e676; color:#111; }
-    .no{ background:#ff5252; color:#111; }
-
-    .float{
-      position:fixed;
-      bottom:-10px;
-      font-size:22px;
-      animation: rise 4s linear forwards;
-      opacity:.9;
-      pointer-events:none;
-    }
-
-    @keyframes rise{
-      from{ transform:translateY(0) scale(1); opacity:1; }
-      to{ transform:translateY(-110vh) scale(1.3); opacity:0; }
-    }
-  </style>
+.float{
+  position:fixed;
+  bottom:-20px;
+  font-size:24px;
+  animation: floatUp 4s linear forwards;
+  opacity:.9;
+}
+@keyframes floatUp{
+  to{transform:translateY(-110vh); opacity:0}
+}
+</style>
 </head>
 
 <body>
-  <div class="app">
-    <div class="header">
-      Hey Aswathy 😏
-      <small>Warning: playful questions ahead</small>
-    </div>
 
-    <div class="chat" id="chat"></div>
-    <div class="typing" id="typing">Afi is thinking… 👀</div>
+<div class="card" id="card">
+  <h1>Heyy my Aswathy 😌</h1>
+  <p>
+    This is just a small futuristic moment…<br>
+    because you deserve cute surprises 🌹
+  </p>
 
-    <div class="controls">
-      <button class="btn yes" onclick="answer(true)">YES 😌</button>
-      <button class="btn no" onclick="answer(false)">NO 😏</button>
-    </div>
+  <p><strong>Will you be my Valentine?</strong></p>
+
+  <div class="buttons">
+    <button onclick="accept()">Yes</button>
+    <button onclick="accept()">Yes</button>
   </div>
+</div>
 
 <script>
-  const chat = document.getElementById("chat");
-  const typing = document.getElementById("typing");
+function accept(){
+  const card = document.getElementById("card");
+  card.innerHTML = `
+    <div class="rose">🌹</div>
+    <h1>For you, Aswathy 😏</h1>
+    <p>
+      This rose isn’t real…<br>
+      but the smile I wanted to see is 😌<br><br>
+      Best-friend Valentine unlocked 💫
+    </p>
+  `;
 
-  const questions = [
-    "Do you enjoy talking to me?",
-    "Have you ever smiled while chatting with me?",
-    "Would you miss me if I go silent for a day?",
-    "Do I make your mood better sometimes?",
-    "Do you secretly like my flirting?",
-    "Am I more entertaining than you admit?",
-    "Have you ever typed a reply, deleted it, and typed again?",
-    "Do you enjoy roasting me a little too much?",
-    "Would chatting be boring without me?",
-    "If I flirt more… should I continue?"
-  ];
-
-  const yesReplies = [
-    "Hmm… noted 😌 I’ll pretend I’m surprised.",
-    "Caught you smiling 😏",
-    "As expected. Premium feature vibes 😌",
-    "Mood booster confirmed 🔥",
-    "Secret’s out then 👀",
-    "Told you. Memorable, not forgettable 😌",
-    "Overthinking exposed 😂",
-    "Roast accepted 😏",
-    "See? Math checks out 😌",
-    "Alright… you asked for it 😏🔥"
-  ];
-
-  const noReplies = [
-    "Lying detected 🚨 but okay 😌",
-    "Interesting… we’ll test that theory 😂",
-    "Denial is powerful 😏",
-    "Yet here you are… suspicious 😌",
-    "Classic denial 🤭",
-    "Still replying though 😏",
-    "Overthinking AND denying? 😂",
-    "You enjoy it more than you admit 😌",
-    "Bold claim 😏",
-    "Noted… continuing carefully 😏🔥"
-  ];
-
-  let i = 0;
-
-  function addMsg(who, text){
-    const d = document.createElement("div");
-    d.className = "msg " + who;
-    d.innerText = text;
-    chat.appendChild(d);
-    chat.scrollTop = chat.scrollHeight;
+  for(let i=0;i<20;i++){
+    setTimeout(createFloat, i*150);
   }
+}
 
-  function floatEmoji(){
-    const e = document.createElement("div");
-    e.className = "float";
-    e.innerText = Math.random() > 0.5 ? "😏" : "🔥";
-    e.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(e);
-    setTimeout(() => e.remove(), 4000);
-  }
-
-  function ask(){
-    if (i >= questions.length) {
-      addMsg("afi", "Okay okay 😌 game over. You survived.");
-      return;
-    }
-    addMsg("afi", questions[i]);
-    floatEmoji();
-  }
-
-  function answer(isYes){
-    addMsg("ash", isYes ? "YES" : "NO");
-    typing.style.display = "block";
-
-    setTimeout(() => {
-      typing.style.display = "none";
-      addMsg("afi", isYes ? yesReplies[i] : noReplies[i]);
-      floatEmoji();
-      i++;
-      setTimeout(ask, 700);
-    }, 1200);
-  }
-
-  // START SAFELY AFTER LOAD
-  window.onload = () => {
-    addMsg("afi", "Ready? Let’s play 😏");
-    setTimeout(ask, 600);
-    setInterval(floatEmoji, 3500);
-  };
+function createFloat(){
+  const f = document.createElement("div");
+  f.className="float";
+  f.innerText = Math.random()>.5 ? "❤️" : "🌹";
+  f.style.left = Math.random()*100 + "vw";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),4000);
+}
 </script>
 
 </body>
