@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Aami 💗</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Aami 💗</title>
 
 <style>
 :root{
-  --pink:#ff7eb3;
-  --rose:#ffb3c6;
-  --glass:rgba(255,255,255,0.18);
+  --pink:#ff4d6d;
+  --rose:#ff8fab;
+  --bg1:#1a0836;
+  --bg2:#000;
+  --glass:rgba(255,255,255,.14);
 }
 
 *{box-sizing:border-box}
@@ -17,50 +19,47 @@
 body{
   margin:0;
   height:100vh;
-  background: radial-gradient(circle at top, #3a0ca3, #000);
+  background:radial-gradient(circle at top,var(--bg1),var(--bg2));
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  color:white;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto;
-  color:#fff;
   overflow:hidden;
 }
 
-/* futuristic moving stars */
+/* floating background */
 body::before{
   content:"";
   position:absolute;
   inset:0;
   background:
     radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px);
-  background-size:45px 45px;
-  animation: drift 25s linear infinite;
+  background-size:40px 40px;
+  animation:move 20s linear infinite;
 }
-@keyframes drift{
-  to{transform:translateY(-45px)}
+@keyframes move{
+  to{transform:translateY(-40px)}
 }
 
 .card{
-  position:relative;
-  width:90%;
+  width:92%;
   max-width:380px;
   background:var(--glass);
-  backdrop-filter: blur(12px);
+  backdrop-filter:blur(12px);
   border-radius:28px;
   padding:32px 26px;
-  box-shadow:
-    0 0 50px rgba(255,126,179,.35),
-    inset 0 0 30px rgba(255,255,255,.12);
   text-align:center;
-  animation: appear 1s ease;
+  box-shadow:0 0 40px rgba(255,77,109,.35);
+  animation:pop .9s ease;
 }
-@keyframes appear{
-  from{opacity:0; transform:scale(.9)}
-  to{opacity:1; transform:scale(1)}
+@keyframes pop{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
 h1{
-  margin:0;
+  margin:0 0 10px;
   font-size:26px;
   background:linear-gradient(90deg,var(--pink),var(--rose));
   -webkit-background-clip:text;
@@ -69,18 +68,14 @@ h1{
 
 p{
   font-size:16px;
+  line-height:1.5;
   opacity:.95;
-  margin:16px 0 22px;
 }
 
-.options{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-button{
-  padding:12px;
+.btn{
+  margin-top:18px;
+  padding:12px 0;
+  width:100%;
   border:none;
   border-radius:999px;
   font-size:15px;
@@ -88,28 +83,56 @@ button{
   cursor:pointer;
   background:linear-gradient(135deg,var(--pink),var(--rose));
   color:#111;
-  box-shadow:0 0 18px rgba(255,126,179,.6);
+  box-shadow:0 0 18px rgba(255,77,109,.6);
   transition:.25s;
 }
-button:hover{transform:scale(1.05)}
+.btn:hover{transform:scale(1.05)}
 
-.rose{
+.options{
+  display:grid;
+  gap:12px;
+  margin-top:18px;
+}
+.option{
+  padding:12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.12);
+  cursor:pointer;
+  transition:.25s;
+}
+.option:hover{
+  background:rgba(255,255,255,.2);
+  transform:scale(1.03);
+}
+
+.fade{animation:fade .6s ease}
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+
+.reaction{
+  margin-top:14px;
+  font-size:16px;
+  opacity:.9;
+}
+
+/* proposal */
+.ring{
   font-size:70px;
-  animation: rise 2.5s ease forwards;
+  margin:18px 0;
+  animation:ring 2s ease forwards;
 }
-@keyframes rise{
-  from{opacity:0; transform:translateY(40px) scale(.6)}
-  to{opacity:1; transform:translateY(0) scale(1)}
+@keyframes ring{
+  from{transform:scale(.5);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
-.float{
-  position:fixed;
-  bottom:-20px;
-  font-size:22px;
-  animation: floatUp 4s linear forwards;
-}
-@keyframes floatUp{
-  to{transform:translateY(-110vh); opacity:0}
+.photo{
+  width:100%;
+  border-radius:20px;
+  margin-top:18px;
+  animation:fade 1.2s ease;
 }
 </style>
 </head>
@@ -119,125 +142,93 @@ button:hover{transform:scale(1.05)}
 <div class="card" id="card"></div>
 
 <script>
-let step = 0;
+let step=0;
 
-const screens = [
-  {
-    html: `
-      <h1>Hey my Aami 💗</h1>
-      <p>
-        Before I ask you something special…<br>
-        let’s see how well you remember us.
-      </p>
-      <button onclick="next()">Okay 🤍</button>
-    `
-  },
-  {
-    q: "Do you remember the day our story became “us”?",
-    a: [
-      "March 10, 2021",
-      "May 10, 2021",
-      "May 10, 2022",
-      "March 20, 2022"
-    ],
-    correct: 1,
-    msg: "May 10, 2021 — the day my favorite person became mine 💗"
-  },
-  {
-    q: "What do I love about you the most?",
-    a: [
-      "Your eyes",
-      "Your smile",
-      "The way you are with me",
-      "Your laugh"
-    ],
-    correct: 2,
-    msg: "It’s how you make me feel calm, happy, and understood 💞"
-  },
-  {
-    q: "What does Afi miss the most right now?",
-    a: [
-      "Talking to you",
-      "Seeing you smile",
-      "Holding your hand",
-      "All of the above"
-    ],
-    correct: 3,
-    msg: "Exactly… every little thing about you 💗"
-  },
-  {
-    html: `
-      <h1>Will you be my Valentine, Aami? 💖</h1>
-      <div class="options">
-        <button onclick="valentine()">Yes</button>
-        <button onclick="valentine()">Yes</button>
-      </div>
-    `
-  }
-];
+const card=document.getElementById("card");
 
-function render(){
-  const c = document.getElementById("card");
-  const s = screens[step];
+start();
 
-  if(s.html){
-    c.innerHTML = s.html;
-    return;
-  }
-
-  c.innerHTML = `
-    <h1>${s.q}</h1>
-    <div class="options">
-      ${s.a.map((t,i)=>`<button onclick="answer(${i})">${t}</button>`).join("")}
-    </div>
-  `;
+function start(){
+card.innerHTML=`
+  <h1>For my sundhari Aamik 😌</h1>
+  <p>Valentine week oka alle…<br>idhanallo ipo trend 😌</p>
+  <p><strong>Shall we start?</strong></p>
+  <button class="btn" onclick="q1()">Start 💗</button>
+`;
 }
 
-function answer(i){
-  const s = screens[step];
-  if(i !== s.correct) return;
-
-  document.getElementById("card").innerHTML = `
-    <p>${s.msg}</p>
-    <button onclick="next()">Next 🤍</button>
-  `;
-  floatHearts();
+function q1(){
+card.innerHTML=`
+  <h1>Small test 😏</h1>
+  <p>When did we become “us”?</p>
+  <div class="options">
+    <div class="option" onclick="wrong()">March 10 2021</div>
+    <div class="option" onclick="correct(q2)">May 10 2021</div>
+    <div class="option" onclick="wrong()">May 10 2022</div>
+    <div class="option" onclick="wrong()">March 20 2022</div>
+  </div>
+`;
 }
 
-function next(){
-  step++;
-  render();
+function q2(){
+card.innerHTML=`
+  <h1>Next 😌</h1>
+  <p>What does Afi love the most about you?</p>
+  <div class="options">
+    <div class="option" onclick="wrong()">Your eyes</div>
+    <div class="option" onclick="wrong()">Your smile</div>
+    <div class="option" onclick="correct(q3)">Your boobs</div>
+    <div class="option" onclick="wrong()">Your belly</div>
+  </div>
+`;
+}
+
+function q3(){
+card.innerHTML=`
+  <h1>One more…</h1>
+  <p>Ni sherikkum enda koode oru wife aayitt jeevikkaan okay aano?</p>
+  <div class="options">
+    <div class="option" onclick="react('Okay… I’m happy')">Yes</div>
+    <div class="option" onclick="react('Ooh')">No</div>
+    <div class="option" onclick="react('Mmm')">Vera vazhilla</div>
+  </div>
+`;
+}
+
+function react(text){
+card.innerHTML+=`<div class="reaction fade">${text}</div>`;
+setTimeout(valentine,1200);
 }
 
 function valentine(){
-  document.getElementById("card").innerHTML = `
-    <div class="rose">🌹🌹</div>
-    <p>
-      These roses are for you, Aami.<br>
-      One for today…<br>
-      and one for every tomorrow with you 💗
-    </p>
-  `;
-  floatHearts();
+card.innerHTML=`
+  <p>One last thing…</p>
+  <h1>Will you be my Valentine?</h1>
+  <div class="options">
+    <div class="option" onclick="proposal()">Yes</div>
+    <div class="option" onclick="proposal()">Yes</div>
+  </div>
+`;
 }
 
-function floatHearts(){
-  for(let i=0;i<18;i++){
-    setTimeout(()=>{
-      const f=document.createElement("div");
-      f.className="float";
-      f.innerText=Math.random()>.5?"❤️":"✨";
-      f.style.left=Math.random()*100+"vw";
-      document.body.appendChild(f);
-      setTimeout(()=>f.remove(),4000);
-    },i*120);
-  }
+function proposal(){
+card.innerHTML=`
+  <p>Aami…</p>
+  <h1>Will you be mine?</h1>
+  <div class="ring">💍</div>
+  <img src="us.jpg" class="photo">
+  <p><strong>Us.</strong></p>
+`;
 }
 
-render();
+function correct(next){
+card.innerHTML+=`<div class="reaction fade">Of course you remember 😌</div>`;
+setTimeout(next,900);
+}
+function wrong(){
+card.innerHTML+=`<div class="reaction fade">Hmm… think again 😌</div>`;
+}
 </script>
 
 </body>
 </html>
-
-
